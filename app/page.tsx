@@ -132,6 +132,17 @@ export default function Home() {
       <footer className="w-full py-8 px-8 bg-zinc-100 dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800">
         <div className="max-w-4xl mx-auto text-center text-sm text-zinc-500 dark:text-zinc-400">
           <p>&copy; {new Date().getFullYear()} KBBI Word Search. Data dari dataset publik KBBI.</p>
+          <p className="mt-2 text-zinc-400 dark:text-zinc-500">
+            by{" "}
+            <a 
+              href="https://rifkidocs.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+            >
+              Rifki
+            </a>
+          </p>
         </div>
       </footer>
     </div>
