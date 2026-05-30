@@ -133,7 +133,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center text-sm text-zinc-500 dark:text-zinc-400">
           <p>&copy; {new Date().getFullYear()} KBBI Word Search. Data dari dataset publik KBBI.</p>
           <p className="mt-2 text-zinc-400 dark:text-zinc-500">
-            by{" "}
+            Made with <span className="text-red-500">❤️</span> by{" "}
             <a 
               href="https://rifkidocs.vercel.app/" 
               target="_blank" 
