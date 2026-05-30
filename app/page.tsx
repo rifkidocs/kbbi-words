@@ -48,7 +48,7 @@ export default function Home() {
     }
     const searchPrefix = prefix.toLowerCase();
     const matches = kbbiData.filter((word) =>
-      word.toLowerCase().startsWith(searchPrefix)
+      word.toLowerCase().startsWith(searchPrefix) && !word.trim().includes(" ")
     );
 
     // Filter words that end with 'x', 'y', or 'z'
