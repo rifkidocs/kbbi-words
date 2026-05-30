@@ -51,16 +51,22 @@ export default function Home() {
       word.toLowerCase().startsWith(searchPrefix)
     );
 
-    // Filter words that end with 'x'
-    const endsWithX = matches.filter((word) => word.toLowerCase().endsWith("x"));
-    const others = matches.filter((word) => !word.toLowerCase().endsWith("x"));
+    // Filter words that end with 'x', 'y', or 'z'
+    const prioritized = matches.filter((word) => {
+      const lowerWord = word.toLowerCase();
+      return lowerWord.endsWith("x") || lowerWord.endsWith("y") || lowerWord.endsWith("z");
+    });
+    const others = matches.filter((word) => {
+      const lowerWord = word.toLowerCase();
+      return !lowerWord.endsWith("x") && !lowerWord.endsWith("y") && !lowerWord.endsWith("z");
+    });
 
     // Shuffle both groups to keep the "random" requirement
-    const shuffledX = shuffleArray(endsWithX);
+    const shuffledPrioritized = shuffleArray(prioritized);
     const shuffledOthers = shuffleArray(others);
 
-    // Combine: 'x' words first, then others, limit to 15
-    const results = [...shuffledX, ...shuffledOthers].slice(0, 15);
+    // Combine: prioritized words first, then others, limit to 15
+    const results = [...shuffledPrioritized, ...shuffledOthers].slice(0, 15);
     setSearchResults(results);
   };
 
