@@ -6,8 +6,7 @@ import ResultList from "@/components/ResultList";
 
 export default function Home() {
   const [kbbiData, setKbbiData] = useState<string[]>([]);
-  const [letterResults, setLetterResults] = useState<string[]>([]);
-  const [prefixResults, setPrefixResults] = useState<string[]>([]);
+  const [searchResults, setSearchResults] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -42,32 +41,27 @@ export default function Home() {
     return shuffled;
   };
 
-  const handleLetterSearch = (letter: string) => {
-    if (!letter) {
-      setLetterResults([]);
-      return;
-    }
-    const searchChar = letter[0].toLowerCase();
-    const matches = kbbiData.filter((word) =>
-      word.toLowerCase().startsWith(searchChar)
-    );
-    // Shuffle and pick 10 random matches
-    const results = shuffleArray(matches).slice(0, 10);
-    setLetterResults(results);
-  };
-
-  const handlePrefixSearch = (prefix: string) => {
+  const handleSearch = (prefix: string) => {
     if (!prefix) {
-      setPrefixResults([]);
+      setSearchResults([]);
       return;
     }
     const searchPrefix = prefix.toLowerCase();
     const matches = kbbiData.filter((word) =>
       word.toLowerCase().startsWith(searchPrefix)
     );
-    // Shuffle and pick 10 random matches
-    const results = shuffleArray(matches).slice(0, 10);
-    setPrefixResults(results);
+
+    // Filter words that end with 'x'
+    const endsWithX = matches.filter((word) => word.toLowerCase().endsWith("x"));
+    const others = matches.filter((word) => !word.toLowerCase().endsWith("x"));
+
+    // Shuffle both groups to keep the "random" requirement
+    const shuffledX = shuffleArray(endsWithX);
+    const shuffledOthers = shuffleArray(others);
+
+    // Combine: 'x' words first, then others, limit to 15
+    const results = [...shuffledX, ...shuffledOthers].slice(0, 15);
+    setSearchResults(results);
   };
 
   if (error) {
@@ -98,7 +92,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex-1 w-full max-w-4xl mx-auto py-12 px-8 flex flex-col gap-12">
+      <main className="flex-1 w-full max-w-2xl mx-auto py-12 px-8 flex flex-col gap-12">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
             <div className="w-12 h-12 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin"></div>
@@ -106,37 +100,22 @@ export default function Home() {
           </div>
         ) : (
           <>
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="p-6 bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800">
+            <section className="w-full">
+              <div className="p-8 bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-zinc-200 dark:border-zinc-800">
                 <SearchBox
-                  label="Search by Single Letter"
-                  placeholder="Enter a letter (e.g., a)"
-                  onSearch={handleLetterSearch}
-                  maxLength={1}
-                />
-              </div>
-              <div className="p-6 bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800">
-                <SearchBox
-                  label="Search by Prefix"
-                  placeholder="Enter prefix (e.g., ab)"
-                  onSearch={handlePrefixSearch}
+                  label="Cari Kata Berawalan..."
+                  placeholder="Masukkan awalan kata (misal: as, ba, ce)"
+                  onSearch={handleSearch}
                 />
               </div>
             </section>
 
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="p-6 bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800 min-h-[300px]">
+            <section className="w-full">
+              <div className="p-8 bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-zinc-200 dark:border-zinc-800 min-h-[400px]">
                 <ResultList
-                  title="Results by Letter"
-                  items={letterResults}
-                  emptyMessage="No results found or search not performed yet."
-                />
-              </div>
-              <div className="p-6 bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800 min-h-[300px]">
-                <ResultList
-                  title="Results by Prefix"
-                  items={prefixResults}
-                  emptyMessage="No results found or search not performed yet."
+                  title="Hasil Pencarian"
+                  items={searchResults}
+                  emptyMessage="Belum ada hasil. Masukkan awalan kata dan tekan Enter."
                 />
               </div>
             </section>
@@ -146,7 +125,7 @@ export default function Home() {
 
       <footer className="w-full py-8 px-8 bg-zinc-100 dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800">
         <div className="max-w-4xl mx-auto text-center text-sm text-zinc-500 dark:text-zinc-400">
-          <p>&copy; {new Date().getFullYear()} KBBI Word Search Dashboard. Data from public KBBI records.</p>
+          <p>&copy; {new Date().getFullYear()} KBBI Word Search. Data dari dataset publik KBBI.</p>
         </div>
       </footer>
     </div>
