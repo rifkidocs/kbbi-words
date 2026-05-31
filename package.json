@@ -1,6 +1,7 @@
 {
-  "name": "kbbi",
-  "version": "0.1.0",
+  "name": "kbbi-word-search",
+  "version": "1.0.0",
+  "description": "Aplikasi pencarian kosa kata KBBI cepat dan modern dengan Next.js dan Tailwind CSS.",
   "private": true,
   "scripts": {
     "dev": "next dev",
