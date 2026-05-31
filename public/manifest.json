@@ -1,0 +1,16 @@
+{
+  "name": "KBBI Word Search",
+  "short_name": "KBBI Search",
+  "description": "Cari kosa kata KBBI dengan cepat dan mudah",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

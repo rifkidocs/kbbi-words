@@ -104,6 +104,7 @@ export default function Home() {
               <h1 className="text-xl font-black tracking-tight text-zinc-900 dark:text-zinc-50 leading-none">
                 KBBI <span className="text-blue-600">Search</span>
               </h1>
+              <h2 className="sr-only">Pencarian Kamus Besar Bahasa Indonesia</h2>
               <p className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest mt-1">
                 Kamus Besar Bahasa Indonesia
               </p>
