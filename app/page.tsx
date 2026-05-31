@@ -51,22 +51,22 @@ export default function Home() {
       word.toLowerCase().startsWith(searchPrefix) && !word.trim().includes(" ")
     );
 
-    // Filter words that end with 'x', 'y', or 'z'
+    // Filter words that end with 'x', 'y', 'z', 'q', 'f', 'v', or 'w'
     const prioritized = matches.filter((word) => {
       const lowerWord = word.toLowerCase();
-      return lowerWord.endsWith("x") || lowerWord.endsWith("y") || lowerWord.endsWith("z");
+      return ["x", "y", "z", "q", "f", "v", "w"].some(char => lowerWord.endsWith(char));
     });
     const others = matches.filter((word) => {
       const lowerWord = word.toLowerCase();
-      return !lowerWord.endsWith("x") && !lowerWord.endsWith("y") && !lowerWord.endsWith("z");
+      return !["x", "y", "z", "q", "f", "v", "w"].some(char => lowerWord.endsWith(char));
     });
 
     // Shuffle both groups to keep the "random" requirement
     const shuffledPrioritized = shuffleArray(prioritized);
     const shuffledOthers = shuffleArray(others);
 
-    // Combine: prioritized words first, then others, limit to 15
-    const results = [...shuffledPrioritized, ...shuffledOthers].slice(0, 15);
+    // Combine: prioritized words first, then others, limit to 40
+    const results = [...shuffledPrioritized, ...shuffledOthers].slice(0, 40);
     setSearchResults(results);
   };
 
@@ -88,7 +88,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans">
       <header className="w-full py-6 px-8 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 shadow-sm">
-        <div className="max-w-4xl mx-auto flex items-center gap-4">
+        <div className="max-w-5xl mx-auto flex items-center gap-4">
           <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
             K
           </div>
@@ -98,7 +98,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex-1 w-full max-w-2xl mx-auto py-12 px-8 flex flex-col gap-12">
+      <main className="flex-1 w-full max-w-5xl mx-auto py-12 px-8 flex flex-col gap-12">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
             <div className="w-12 h-12 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin"></div>
@@ -130,7 +130,7 @@ export default function Home() {
       </main>
 
       <footer className="w-full py-8 px-8 bg-zinc-100 dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800">
-        <div className="max-w-4xl mx-auto text-center text-sm text-zinc-500 dark:text-zinc-400">
+        <div className="max-w-5xl mx-auto text-center text-sm text-zinc-500 dark:text-zinc-400">
           <p className="mb-2 font-medium text-zinc-600 dark:text-zinc-300">
             Total {kbbiData.length.toLocaleString()} kata unik tersedia
           </p>
